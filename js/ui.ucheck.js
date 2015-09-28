@@ -7,8 +7,8 @@ var UI = require('./core');
  * UCheck
  * @via https://github.com/designmodo/Flat-UI/blob/8ef98df23ba7f5033e596a9bd05b53b535a9fe99/js/radiocheck.js
  * @license CC BY 3.0 & MIT
- * @param element
- * @param options
+ * @param {HTMLElement} element
+ * @param {object} options
  * @constructor
  */
 
@@ -34,31 +34,42 @@ UCheck.prototype.init = function() {
   var options = this.options;
 
   if (element.type === 'checkbox') {
-    $element.addClass(options.checkboxClass).after(options.checkboxTpl);
+    $element.addClass(options.checkboxClass)
+      .after(options.checkboxTpl);
   } else if (element.type === 'radio') {
-    $element.addClass(options.radioClass).after(options.radioTpl);
+    $element.addClass(options.radioClass)
+      .after(options.radioTpl);
   }
 };
 
 UCheck.prototype.check = function() {
-  this.$element.prop('checked', true)
-    .trigger('change.ucheck.amui').trigger('checked.ucheck.amui');
+  this.$element
+    .prop('checked', true)
+    .trigger('change.ucheck.amui')
+    .trigger('checked.ucheck.amui');
 },
 
 UCheck.prototype.uncheck = function() {
-  this.$element.prop('checked', false)
-    .trigger('change.ucheck.amui').trigger('unchecked.ucheck.amui');
+  this.$element
+    .prop('checked', false)
+    .trigger('change.ucheck.amui')
+    .trigger('unchecked.ucheck.amui');
 },
 
 UCheck.prototype.toggle = function() {
-  this.$element.prop('checked', function(i, value) {
-    return !value;
-  }).trigger('change.ucheck.amui').trigger('toggled.ucheck.amui');
+  this.$element.
+    prop('checked', function(i, value) {
+      return !value;
+    })
+    .trigger('change.ucheck.amui')
+    .trigger('toggled.ucheck.amui');
 },
 
 UCheck.prototype.disable = function() {
-  this.$element.prop('disabled', true).
-    trigger('change.ucheck.amui').trigger('disabled.ucheck.amui');
+  this.$element
+    .prop('disabled', true)
+    .trigger('change.ucheck.amui')
+    .trigger('disabled.ucheck.amui');
 },
 
 UCheck.prototype.enable = function() {
@@ -67,49 +78,31 @@ UCheck.prototype.enable = function() {
 },
 
 UCheck.prototype.destroy = function() {
-  this.$element.removeData('amui.ucheck').
-    removeClass(this.options.checkboxClass + ' ' + this.options.radioClass).
-    next('.am-ucheck-icons').remove().
-    end().trigger('destroyed.ucheck.amui');
+  this.$element
+    .removeData('amui.ucheck')
+    .removeClass(this.options.checkboxClass + ' ' + this.options.radioClass)
+    .next('.am-ucheck-icons')
+    .remove()
+  .end()
+    .trigger('destroyed.ucheck.amui');
 };
 
-function Plugin(option) {
-  return this.each(function() {
-    var $this = $(this);
-    var data = $this.data('amui.ucheck');
-    var options = $.extend({}, UI.utils.parseOptions($this.data('amUcheck')),
-      typeof option === 'object' && option);
-
-    if (!data && option === 'destroy') {
-      return;
-    }
-
-    if (!data) {
-      $this.data('amui.ucheck', (data = new UCheck(this, options)));
-    }
-
-    if (typeof option == 'string') {
-      data[option] && data[option]();
-    }
-
+UI.plugin('uCheck', UCheck, {
+  after: function() {
     // Adding 'am-nohover' class for touch devices
     if (UI.support.touch) {
-      $this.parent().hover(function() {
-        $this.addClass('am-nohover');
+      this.parent().hover(function() {
+        this.addClass('am-nohover');
       }, function() {
-        $this.removeClass('am-nohover');
+        this.removeClass('am-nohover');
       });
     }
-  });
-}
-
-$.fn.uCheck = Plugin;
+  }
+});
 
 UI.ready(function(context) {
   $('[data-am-ucheck]', context).uCheck();
 });
-
-$.AMUI.uCheck = UCheck;
 
 module.exports = UCheck;
 

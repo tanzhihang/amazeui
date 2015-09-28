@@ -11,13 +11,15 @@ next: widgets/accordion.html
 
 Amaze UI Web 组件把一些常见的网页组件拆分成不同的部分，进行类似 Web Components 的封装（[Web 组件简介](/getting-started/widget-dev)、[开发规范](/getting-started/widget)）。
 
+- **文档中提及的「云适配 WebIDE」为云适配开发的网站适配工具，[详情请点击访问](http://platform.yunshipei.com/)。**
+
 <div class="am-alert am-alert-danger"><strong>注意：</strong>Web 组件不考虑 IE 8/9 支持。</div>
 
 ## Web 组件演示
 
-Amaze UI 目前封装了 10 余个主要面向移动端的 Web 组件（[独立窗口中浏览 Demo](/widgets/m)）。
+Amaze UI 目前封装了 10 余个主要面向移动端的 Web 组件（[独立窗口中浏览 Demo](__M_PAGE__/widgets/m)）。
 
-<iframe src="/widgets/m" frameborder="0" id="doc-widget-frame" frameborder="0"></iframe>
+<iframe src="__M_PAGE__/widgets/m" frameborder="0" id="doc-widget-frame" frameborder="0"></iframe>
 
 ## 使用场景
 

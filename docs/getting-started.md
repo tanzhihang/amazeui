@@ -18,10 +18,12 @@ Amaze UI 是一个轻量级（所有 CSS 和 JS gzip 后 100 kB 左右）、 [**
 
 <div class="am-g">
   <div class="am-u-md-8 am-u-md-centered">
-    <a id="doc-dl-btn" href="http://amazeui.org/download?ver=2.2.0" class="am-btn am-btn-block am-btn-success am-btn-lg" onclick="window.ga && ga('send', 'pageview', '/download/AmazeUI.zip');
-"><i class="am-icon-download"></i> Amaze UI v2.2.0</a>
+    <a id="doc-dl-btn" href="http://amazeui.org/download?ver=__VERSION__" class="am-btn am-btn-block am-btn-success am-btn-lg" onclick="window.ga && ga('send', 'pageview', '/download/AmazeUI.zip');
+"><i class="am-icon-download"></i> Amaze UI v__VERSION__</a>
   </div>
 </div>
+
+- [**更新日志**](https://github.com/allmobilize/amazeui/blob/master/CHANGELOG.md)
 
 **离线文档：**
 
@@ -50,17 +52,17 @@ Gulp、NPM 构建的前端开发工作流，点击[访问项目主页](https://g
 
 ### 使用 CDN
 
-Amaze UI CDN： 域名解析服务由 DNSPod 提供，CDN 存储由又拍云提供。
+Amaze UI CDN： 域名解析服务由 DNSPod 提供，CDN 存储由七牛提供。
 
 ```html
-http://cdn.amazeui.org/amazeui/2.2.0/css/amazeui.css
-http://cdn.amazeui.org/amazeui/2.2.0/css/amazeui.min.css
-http://cdn.amazeui.org/amazeui/2.2.0/js/amazeui.js
-http://cdn.amazeui.org/amazeui/2.2.0/js/amazeui.min.js
-http://cdn.amazeui.org/amazeui/2.2.0/js/amazeui.legacy.js
-http://cdn.amazeui.org/amazeui/2.2.0/js/amazeui.legacy.min.js
-http://cdn.amazeui.org/amazeui/2.2.0/js/amazeui.widgets.helper.js
-http://cdn.amazeui.org/amazeui/2.2.0/js/amazeui.widgets.helper.min.js
+http://cdn.amazeui.org/amazeui/__VERSION__/css/amazeui.css
+http://cdn.amazeui.org/amazeui/__VERSION__/css/amazeui.min.css
+http://cdn.amazeui.org/amazeui/__VERSION__/js/amazeui.js
+http://cdn.amazeui.org/amazeui/__VERSION__/js/amazeui.min.js
+http://cdn.amazeui.org/amazeui/__VERSION__/js/amazeui.ie8polyfill.js
+http://cdn.amazeui.org/amazeui/__VERSION__/js/amazeui.ie8polyfill.min.js
+http://cdn.amazeui.org/amazeui/__VERSION__/js/amazeui.widgets.helper.js
+http://cdn.amazeui.org/amazeui/__VERSION__/js/amazeui.widgets.helper.min.js
 ```
 
 ### 使用 Bower
@@ -75,7 +77,14 @@ bower install amazeui
 - [Echo.js - 图片懒加载](https://github.com/amazeui/echo)
 - [Lazyload - 图片懒加载](https://github.com/amazeui/lazyload)
 - [Chosen - 下拉选框增强](https://github.com/amazeui/chosen)
-- [Masonry - 瀑布流](https://github.com/amazeui/chosen)
+- [Masonry - 瀑布流](https://github.com/amazeui/masonry)
+- [Switch - 开关切换插件](https://github.com/amazeui/switch)
+- [Tags Input - 标签输入框](https://github.com/amazeui/tagsinput)
+- [Video.js Amaze UI 皮肤](https://github.com/amazeui/videojs)
+- [jQuery DataTables - 表格分页、排序等](https://github.com/amazeui/datatables)
+- [Tree - 树形菜单插件](https://github.com/amazeui/tree)
+- [Swiper - 图片轮播插件](https://github.com/amazeui/swiper)
+- [Slick - 图片轮播插件](https://github.com/amazeui/slick)
 
 ### 获取源码
 
@@ -91,7 +100,7 @@ bower install amazeui
 
 - `amazeui.css` / `amazeui.js`：包含 Amaze UI 所有的 CSS、JS。
 - `amazeui.flat.css`：圆角版 Amaze UI CSS，演示参见 `1.x`。
-- `amazeui.legacy.js`：为 IE 8 打包的 JS。
+- `amazeui.ie8polyfill.js`：IE8 polyfill。
 - `amazeui.widgets.helper.js`： **供使用 Handlebars 的用户使用，其他用户请忽略**，内含 Web 组件必须的 Handlebars helper 及 Web 组件模板 partials。
 
 以上每个文件都有对应的 minified 文件。
@@ -109,7 +118,7 @@ Amaze UI 遵循 [Semantic Versioning](http://semver.org/lang/zh-CN/) 规范，�
 
 ## 下载包目录结构
 
-下载包种包含 Amaze UI 的 CSS、JS 文件，以及示例文件：
+下载包中包含 Amaze UI 的 CSS、JS 文件，以及示例文件：
 
 - `index.html` - 空白 HTML 模板；
 - `blog.html` - 博客页面模板（[预览](/examples/blog.html)）；
@@ -201,8 +210,11 @@ AmazeUI
 <script src="assets/js/jquery.min.js"></script>
 <!--<![endif]-->
 <!--[if lte IE 8 ]>
-<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
 <![endif]-->
+<script src="assets/js/amazeui.min.js"></script>
 </body>
 </html>
 ```
@@ -212,16 +224,3 @@ AmazeUI
 有任何使用问题，请在评论中留言，也欢迎大家发表意见、建议。
 
 __感谢大家对 Amaze UI 的关注和支持！__
-
-<script>
-  function pyRegisterCvt(){
-    var w=window,d=document,e=encodeURIComponent;
-    var b=location.href,c=d.referrer,f,g=d.cookie,h=g.match(/(^|;)\s*ipycookie=([^;]*)/),i=g.match(/(^|;)\s*ipysession=([^;]*)/);
-    if (w.parent!=w){f=b;b=c;c=f;};u='//stats.ipinyou.com/cvt?a='+e('9J.H5.EtdEOxc6fV-EiorJDjFOTP')+'&c='+e(h?h[2]:'')+'&s='+e(i?i[2].match(/jump\%3D(\d+)/)[1]:'')+'&u='+e(b)+'&r='+e(c)+'&rd='+(new Date()).getTime()+'&e=';
-    (new Image()).src=u;
-  }
-
-  $(function() {
-    $('#doc-dl-btn').on('click', pyRegisterCvt);
-  });
-</script>

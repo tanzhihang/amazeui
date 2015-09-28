@@ -1,4 +1,5 @@
 'use strict';
+
 var $ = require('jquery');
 var UI = require('./core');
 var $w = $(window);
@@ -9,28 +10,28 @@ var $w = $(window);
  */
 
 var Popover = function(element, options) {
-  this.options = $.extend({}, Popover.DEFAULTS, options || {});
+  this.options = $.extend({}, Popover.DEFAULTS, options);
   this.$element = $(element);
   this.active = null;
   this.$popover = (this.options.target && $(this.options.target)) || null;
 
   this.init();
-  this.events();
+  this._bindEvents();
 };
 
 Popover.DEFAULTS = {
-  theme: undefined,
+  theme: null,
   trigger: 'click',
   content: '',
   open: false,
-  target: undefined,
+  target: null,
   tpl: '<div class="am-popover">' +
     '<div class="am-popover-inner"></div>' +
     '<div class="am-popover-caret"></div></div>'
 };
 
 Popover.prototype.init = function() {
-  var me = this;
+  var _this = this;
   var $element = this.$element;
   var $popover;
 
@@ -46,7 +47,7 @@ Popover.prototype.init = function() {
   this.sizePopover();
 
   function sizePopover() {
-    me.sizePopover();
+    _this.sizePopover();
   }
 
   // TODO: 监听页面内容变化，重新调整位置
@@ -93,7 +94,7 @@ Popover.prototype.sizePopover = function sizePopover() {
   $popover.css({left: '', top: ''}).removeClass('am-popover-left ' +
   'am-popover-right am-popover-top am-popover-bottom');
 
-  $popCaret.css({left: '', top: ''});
+  // $popCaret.css({left: '', top: ''});
 
   if (popTotalHeight - spacing < triggerRect.top + spacing) {
     // Popover on the top of trigger
@@ -134,7 +135,7 @@ Popover.prototype.sizePopover = function sizePopover() {
     }
 
     diff = diff - popLeft;
-    $popCaret.css({left: (popWidth / 2 - popCaretSize + diff) + 'px'});
+    // $popCaret.css({left: (popWidth / 2 - popCaretSize + diff) + 'px'});
 
   } else if (popPosition === 'middle') {
     popLeft = triggerOffset.left - popWidth - popCaretSize;
@@ -148,7 +149,7 @@ Popover.prototype.sizePopover = function sizePopover() {
       popLeft = winWidth - popWidth - 5;
       $popover.removeClass('am-popover-left').addClass('am-popover-right');
     }
-    $popCaret.css({top: (popHeight / 2 - popCaretSize / 2) + 'px'});
+    // $popCaret.css({top: (popHeight / 2 - popCaretSize / 2) + 'px'});
   }
 
   // Apply position style
@@ -173,10 +174,10 @@ Popover.prototype.close = function() {
 
   this.$element.trigger('close.popover.amui');
 
-  $popover.
-    removeClass('am-active').
-    trigger('closed.popover.amui').
-    hide();
+  $popover
+    .removeClass('am-active')
+    .trigger('closed.popover.amui')
+    .hide();
 
   this.active = false;
 };
@@ -186,20 +187,21 @@ Popover.prototype.getPopover = function() {
   var theme = [];
 
   if (this.options.theme) {
-    $.each(this.options.theme.split(','), function(i, item) {
+    $.each(this.options.theme.split(' '), function(i, item) {
       theme.push('am-popover-' + $.trim(item));
     });
   }
+
   return $(this.options.tpl).attr('id', uid).addClass(theme.join(' '));
 };
 
 Popover.prototype.setContent = function(content) {
   content = content || this.options.content;
-  this.$popover && this.$popover.find('.am-popover-inner').empty().
-    html(content);
+  this.$popover && this.$popover.find('.am-popover-inner')
+    .empty().html(content);
 };
 
-Popover.prototype.events = function() {
+Popover.prototype._bindEvents = function() {
   var eventNS = 'popover.amui';
   var triggers = this.options.trigger.split(' ');
 
@@ -218,31 +220,18 @@ Popover.prototype.events = function() {
   }
 };
 
-function Plugin(option) {
-  return this.each(function() {
-    var $this = $(this);
-    var data = $this.data('amui.popover');
-    var options = $.extend({},
-      UI.utils.parseOptions($this.attr('data-am-popover')),
-      typeof option == 'object' && option);
+Popover.prototype.destroy = function() {
+  this.$element.off('.popover.amui').removeData('amui.popover');
+  this.$popover.remove();
+};
 
-    if (!data) {
-      $this.data('amui.popover', (data = new Popover(this, options)));
-    }
-
-    if (typeof option == 'string') {
-      data[option] && data[option]();
-    }
-  });
-}
-
-$.fn.popover = Plugin;
+UI.plugin('popover', Popover);
 
 // Init code
 UI.ready(function(context) {
   $('[data-am-popover]', context).popover();
 });
 
-$.AMUI.popover = Popover;
-
 module.exports = Popover;
+
+// TODO: 允许用户定义位置

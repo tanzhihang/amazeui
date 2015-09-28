@@ -11,7 +11,9 @@
 // Modifiers:                `am-icon-sm`
 //                           `am-icon-md`
 //                           `am-icon-lg`
+//                           `am-icon-fw`
 //                           `am-icon-spin`
+//                           `am-icon-pulse`
 //
 // Uses:                     Animation
 //
@@ -23,7 +25,7 @@
 
 //@fa-font-path: "../fonts";
 // https://github.com/staticfile/static/issues/11
-@fa-font-path: '//dn-staticfile.qbox.me/font-awesome/4.3.0/fonts';
+@fa-font-path: '//dn-amui.qbox.me/font-awesome/4.3.0/fonts';
 @fa-css-prefix: ~"@{ns}icon";
 @fa-version: '4.3.0';
 @fa-border-color: #eee;
@@ -57,6 +59,8 @@
 
 [class*="@{ns}icon-"] {
   display: inline-block;
+  font-style: normal;
+
   &:before {
     .am-icon-font;
   }
@@ -177,6 +181,14 @@
 
 .@{ns}icon-btn-lg {
   .icon-btn-size(64px; 64px; 28px);
+}
+
+
+/* Modifier: `.am-icon-fw` Fixed width
+============================================================================= */
+.@{ns}icon-fw {
+  width: (20em/16);
+  text-align: center;
 }
 
 
@@ -2350,6 +2362,9 @@
   animation: icon-spin 2s infinite linear;
 }
 
+.am-icon-pulse {
+  animation: icon-spin 1s infinite steps(8);
+}
 
 // List Icons
 // -----------------------------------------------------------------------------

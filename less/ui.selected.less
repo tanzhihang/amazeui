@@ -24,11 +24,13 @@
  ============================================================================ */
 
 .@{ns}selected {
+  width: 200px;
 }
 
 .@{ns}selected-btn {
+  width: 100%;
+  padding-left: 10px;
   text-align: right;
-  width: 200px;
 
   &.@{ns}btn-default {
     background: none;
@@ -86,6 +88,13 @@
         color: @global-primary;
       }
     }
+
+    // disabled item
+    &.@{ns}disabled {
+      opacity: .5;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
   }
 
   .@{ns}selected-list-header {
@@ -128,6 +137,11 @@
     border-top: 1px solid #e5e5e5;
     padding: 10px 10px 0;
   }
+}
+
+// placeholder color
+.@{ns}selected-placeholder {
+  opacity: .65;
 }
 
 // TODO: 移动端样式？

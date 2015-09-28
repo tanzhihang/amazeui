@@ -1,9 +1,11 @@
 'use strict';
 
 var $ = require('jquery');
-var UI = require('./core');
+var UI = require('../../../js/core');
 
 var isWeChat = window.navigator.userAgent.indexOf('MicroMessenger') > -1;
+
+/* global wx,alert */
 
 function appendWeChatSDK(callback) {
   var $weChatSDK = $('<script/>', {
@@ -53,9 +55,10 @@ function payHandler() {
 
 var payInit = payHandler;
 
-$(document).on('ready', payInit);
+// Init on DOM ready
+$(payInit);
 
-module.exports = $.AMUI.pay = {
+module.exports = UI.pay = {
   VERSION: '1.0.0',
   init: payInit
 };

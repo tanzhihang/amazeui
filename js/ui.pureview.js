@@ -198,8 +198,9 @@ PureView.prototype.refreshSlides = function() {
   var total = $images.length;
   this.$slider = $pureview.find(options.selector.slider);
   this.$nav = $pureview.find(options.selector.nav);
-  this.imgUrls = []; // for WeChat Image Preview
   var viewedFlag = 'data-am-pureviewed';
+  // for WeChat Image Preview
+  this.imgUrls = this.imgUrls || [];
 
   if (!total) {
     return;
@@ -218,6 +219,8 @@ PureView.prototype.refreshSlides = function() {
       src = item.href; // to absolute path
       title = item.title || '';
     } else {
+      // NOTE: `data-rel` should be a full URL, otherwise,
+      //        WeChat images preview will not work
       src = $(item).data('rel') || item.src; // <img src='' data-rel='' />
       title = $(item).attr('alt') || '';
     }
@@ -278,6 +281,7 @@ PureView.prototype.activate = function($slide) {
 
   this.loadImage($slide, function() {
     UI.utils.imageLoader($slide.find('img'), function(image) {
+      $slide.find('.am-pinch-zoom').addClass('am-pureview-loaded');
       $(image).addClass('am-img-loaded');
     });
   });
@@ -391,32 +395,12 @@ PureView.prototype.resetScrollbar = function() {
   this.$body.css('padding-right', '');
 };
 
-function Plugin(option) {
-  return this.each(function() {
-    var $this = $(this);
-    var data = $this.data('amui.pureview');
-    var options = $.extend({},
-      UI.utils.parseOptions($this.data('amPureview')),
-      typeof option == 'object' && option);
-
-    if (!data) {
-      $this.data('amui.pureview', (data = new PureView(this, options)));
-    }
-
-    if (typeof option == 'string') {
-      data[option]();
-    }
-  });
-}
-
-$.fn.pureview = Plugin;
+UI.plugin('pureview', PureView);
 
 // Init code
 UI.ready(function(context) {
   $('[data-am-pureview]', context).pureview();
 });
-
-$.AMUI.pureview = PureView;
 
 module.exports = PureView;
 
